@@ -26,10 +26,15 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Setup Gradle Wrapper
+        run: |
+          cd android
+          gradle wrapper --gradle-version 7.5.1
+          chmod +x gradlew
+
       - name: Build Android APK
         run: |
           cd android
-          chmod +x gradlew
           ./gradlew assembleDebug
 
       - name: Upload APK Artifact
