@@ -1,78 +1,26 @@
-apply plugin: "com.android.application"
-apply plugin: "com.facebook.react"
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-import com.android.build.OutputFile
-
-project.ext.react = [
-    enableHermes: true,
-]
-
-android {
-    ndkVersion rootProject.ext.ndkVersion
-    compileSdkVersion rootProject.ext.compileSdkVersion
-
-    namespace "com.audiocastapp" // 프로젝트의 패키지명에 맞게 확인해주세요
-
-    defaultConfig {
-        applicationId "com.audiocastapp"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+buildscript {
+    ext {
+        buildToolsVersion = "33.0.0"
+        minSdkVersion = 21
+        compileSdkVersion = 33
+        targetSdkVersion = 33
+        ndkVersion = "23.1.7779620"
     }
-
-    signingConfigs {
-        debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias오류 메시지에서 가장 핵심적인 원인은 `android/app/build.gradle` 파일에서 옛날 방식의 React Native 스크립트를 적용하려다 실패한 것입니다 (`Could not read script .../native.gradle`).
-
-이를 해결하기 위한 `android/app/build.gradle` 파일의 수정 코드는 다음과 같습니다.
-
-### `android/app/build.gradle` 전체 수정 코드
-
-GitHub에서 `android/app/build.gradle` 파일을 수정하여 아래 내용으로 대체해 주세요.
-
-```groovy
-apply plugin: "com.android.application"
-apply plugin: "com.facebook.react"
-
-android {
-    ndkVersion rootProject.ext.ndkVersion
-    compileSdkVersion rootProject.ext.compileSdkVersion
-
-    namespace "com.audiocastapp" // 프로젝트에 맞게 패키지명이 다를 경우 해당 이름으로 변경
-    
-    defaultConfig {
-        applicationId "com.audiocastapp"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+    repositories {
+        google()
+        mavenCentral()
     }
-
-    signingConfigs {
-        debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-        }
-    }
-
-    buildTypes {
-        debug {
-            signingConfig signingConfigs.debug
-        }
-        release {
-            signingConfig signingConfigs.debug
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-        }
+    dependencies {
+        classpath("com.android.tools.build:gradle:7.3.1")
+        classpath("com.facebook.react:gradle-plugin")
     }
 }
 
-dependencies {
-    implementation("com.facebook.react:react-android")
-    implementation("com.facebook.react:hermes-android")
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
 }
